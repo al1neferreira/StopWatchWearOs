@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.PlayCircleFilled
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,7 +30,12 @@ import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.TimeText
+import androidx.wear.compose.material.TimeTextDefaults
+import androidx.wear.compose.material.Vignette
+import androidx.wear.compose.material.VignettePosition
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,12 +43,34 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-
-
         setContent {
             val viewModel = viewModel<StopWatchViewModel>()
             val timerState by viewModel.timerState.collectAsStateWithLifecycle()
             val stopWatchText by viewModel.stopWatchText.collectAsStateWithLifecycle()
+
+            Scaffold(
+                timeText = {
+                    TimeText(
+                        timeTextStyle = TimeTextDefaults.timeTextStyle(
+                            fontSize = 25.sp
+                        )
+                    )
+                },
+                vignette = {
+                    Vignette(vignettePosition = VignettePosition.TopAndBottom)
+                }
+
+            ) {
+
+                StopWatch(
+                    state = timerState,
+                    text = stopWatchText,
+                    onToggleRunning = viewModel::toggleIsRunning,
+                    onReset = viewModel::resetTimer,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
         }
     }
 }
@@ -74,7 +102,7 @@ private fun StopWatch(
             Button(onClick = onToggleRunning) {
                 Icon(
                     imageVector = if (state == TimerState.RUNNING) {
-                        Icons.Default.PlayCircleFilled
+                        Icons.Default.Pause
                     } else {
                         Icons.Default.PlayArrow
                     },
