@@ -15,11 +15,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Icon
-import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
@@ -99,7 +99,11 @@ private fun StopWatch(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            Button(onClick = onToggleRunning) {
+            Button(onClick = onToggleRunning,
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color(0xFFCCFF33)
+                )
+            ) {
                 Icon(
                     imageVector = if (state == TimerState.RUNNING) {
                         Icons.Default.Pause
@@ -109,16 +113,16 @@ private fun StopWatch(
                     contentDescription = null
                 )
             }
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(10.dp))
             Button(
                 onClick = onReset,
                 enabled = state != TimerState.RESET,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.surface
+                    backgroundColor = Color(0xFFA6CF2C)
                 )
             ) {
                 Icon(
-                    imageVector = Icons.Default.Stop,
+                    imageVector = Icons.Default.RestartAlt,
                     contentDescription = null
                 )
             }

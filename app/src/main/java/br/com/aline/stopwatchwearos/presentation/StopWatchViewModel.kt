@@ -24,7 +24,7 @@ class StopWatchViewModel:ViewModel() {
     private val _timerState = MutableStateFlow(TimerState.RESET)
     val timerState = _timerState.asStateFlow()
 
-    private val formatter = DateTimeFormatter.ofPattern("mm:ss:SSS")
+    private val formatter = DateTimeFormatter.ofPattern("mm:ss:SS")
     val stopWatchText = _elapsedTime
         .map { millis ->
             LocalTime.ofNanoOfDay(millis * 1_000_000).format(formatter)
@@ -32,7 +32,7 @@ class StopWatchViewModel:ViewModel() {
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            "00:00:000"
+            "00:00:00"
         )
 
     init {

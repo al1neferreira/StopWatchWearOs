@@ -84,5 +84,14 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended")
 
+    implementation("androidx.wear.compose:compose-foundation:1.3.1")
+
+    implementation ("androidx.wear.compose:compose-material:$rootProject.wearVersion")
+    implementation ("androidx.wear.compose:compose-foundation:$rootProject.wearVersion")
+
+
+
+
+
 
 }
